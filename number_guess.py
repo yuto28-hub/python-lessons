@@ -63,7 +63,6 @@ def main():
                 kind = "奇数"
             print(f"→ ヒント: 答えは{kind}だよ")
 
-
 # このファイルを直接実行したときだけ main() を動かすおまじない
 if __name__ == "__main__":
     main()
