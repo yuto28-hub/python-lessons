@@ -1,0 +1,13 @@
+# 認証情報（絶対にコミットしない）
+credentials.json
+token.json
+client_secret*.json
+service_account*.json
+.env
+
+# Python
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
