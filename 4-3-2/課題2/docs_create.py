@@ -1,20 +1,23 @@
-# ローカルのファイルを Google Drive API を使って Google ドライブにアップロードするプログラム
-# 認証は OAuth 2.0（初回だけブラウザで許可 → 2回目以降は自動）
+# Google ドキュメント API を使って、新しいドキュメントを作成し
+# 指定したテキストを挿入するプログラム
+# 認証は OAuth 2.0（課題1で取得した token.json をそのまま利用）
 #
 # 使い方:
-#   python3 drive_upload.py <ファイルまたはフォルダのパス>
-#   例1（ファイル1つ）  : python3 drive_upload.py ../../課題3/課題3_円グラフ.png
-#   例2（フォルダ一括）  : python3 drive_upload.py ../../課題3
+#   python3 docs_create.py [挿入したいテキスト]
+#   例1（既定の文章）  : python3 docs_create.py
+#   例2（文章を指定）  : python3 docs_create.py "議事録のたたき台"
 #
 # 必要なライブラリ:
 #   pip3 install --user google-api-python-client google-auth-httplib2 google-auth-oauthlib
 #
-# 事前準備（初回のみ）は同じフォルダの README.md を参照
+# 事前準備（初回のみ）は 課題1 フォルダの README.md を参照
+#   ※ Google Cloud で Google Docs API を有効にしておくこと
 
 import os         # 環境変数の読み取りやファイル権限の変更に使う標準ライブラリ
 import sys        # コマンドラインの引数を受け取るための標準ライブラリ
 import warnings   # 警告メッセージの表示を調整するための標準ライブラリ
 from pathlib import Path  # ファイルのパスを扱いやすくする標準ライブラリ
+
 # Google製ライブラリは Python 3.9 に対して「古いバージョンです」という警告を大量に出す。
 # 動作には影響がなく、本来の表示が埋もれて読みにくくなるので隠しておく。
 # （※この2行は Google のライブラリを import する「前」に書く必要がある）
@@ -26,23 +29,28 @@ from google.auth.exceptions import RefreshError          # 認証の期限切れ
 from google.auth.transport.requests import Request       # 認証の自動更新に使う
 from google.oauth2.credentials import Credentials        # 保存済みの認証情報を読む
 from google_auth_oauthlib.flow import InstalledAppFlow   # ブラウザを開いて許可をもらう
-from googleapiclient.discovery import build              # Drive APIの窓口を作る
+from googleapiclient.discovery import build              # APIの窓口を作る
 from googleapiclient.errors import HttpError             # API通信のエラー
 
+# ------------------------------------------------------------
+# 設定（ファイル名などをここにまとめておくと後から変更しやすい）
+# ------------------------------------------------------------
+
+# 認証情報の置き場所。GitHubに公開されないよう「リポジトリの外」に置くのが鉄則
+# 環境変数 GDRIVE_CONFIG_DIR を設定すれば置き場所を変更できる
 CRED_DIR_ENV = "GDRIVE_CONFIG_DIR"
 DEFAULT_CRED_DIR = "~/.config/gdrive"
 
 CRED_FILE = "credentials.json"  # 自分で用意するファイル（GCPからダウンロードする）
 TOKEN_FILE = "token.json"       # 初回の認証後にプログラムが自動で作るファイル
 
-
 # 権限の範囲（スコープ）。drive.file は「このプログラムが作ったファイルだけ」
-# 触れる最小限の権限。既存ファイルを勝手に読まれる心配がないので安全
+# 触れる最小限の権限。Docs API もこの権限で作成・編集ができる
 SCOPES = ["https://www.googleapis.com/auth/drive.file"]
-
 
 BAR = "=" * 45   # 見出し用の太い区切り線
 THIN = "-" * 45  # 中身用の細い区切り線
+
 
 def get_cred_dir():
     """認証情報を置くフォルダのパスを返す（環境変数があればそちらを優先）"""
@@ -55,7 +63,7 @@ def get_cred_dir():
 
 
 def build_service():
-    """OAuth認証を行い、Drive APIを操作するオブジェクトを返す。失敗したら None を返す"""
+    """OAuth認証を行い、Docs APIを操作するオブジェクトを返す。失敗したら None を返す"""
 
     cred_dir = get_cred_dir()
     cred_path = cred_dir / CRED_FILE    # 「/」でパスをつなげるのが pathlib の書き方
@@ -88,7 +96,7 @@ def build_service():
         if creds is None or not creds.valid:
             if not cred_path.exists():
                 print(f"エラー: 認証ファイルが見つかりません（{cred_path}）")
-                print("→ README.md の手順1〜5を実行して credentials.json を配置してください")
+                print("→ 課題1の README.md の手順1〜5を実行して credentials.json を配置してください")
                 return None
 
             print("ブラウザを開いて Google アカウントの許可を求めます...")
@@ -129,10 +137,11 @@ def insert_text(service, doc_id, text):
     """指定したドキュメントの先頭にテキストを挿入する"""
 
     # requests は「やってほしいこと」のリスト。1回の通信で複数の指示を送れる
+    # 1つでも不正な指示があると全体が失敗し、何も適用されない
     requests = [
         {
             "insertText": {
-                # index: 1 が本文の先頭。0 ではないので注意（理由は後述）
+                # index: 1 が本文の先頭。0 は文書の始まりを示す目印で書き込めない
                 "location": {"index": 1},
                 "text": text,
             }
@@ -185,6 +194,7 @@ def main():
 
         if status == 403:
             print("→ 権限またはAPIが有効になっていない可能性があります")
+            print("　 Google Cloud で Google Docs API が有効か確認してください")
         elif status == 404:
             print("→ 指定したドキュメントが見つかりません")
         elif status == 401:

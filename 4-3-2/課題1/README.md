@@ -9,6 +9,7 @@
 |---------|------|
 | `drive_upload.py` | 本体 |
 | `README.md` | このファイル（初回セットアップ手順） |
+| `../課題2/docs_create.py` | 課題2（ドキュメント API）の本体。セットアップはこのREADMEを参照 |
 
 ---
 
@@ -21,8 +22,12 @@
 1. https://console.cloud.google.com/ を開く
 2. 画面上部のプロジェクト選択 →「新しいプロジェクト」
 3. 名前は何でもよい（例: `python-drive-upload`）→ 作成
+> 実際に使っているプロジェクトは「My First Project」（ID: silken-network-507121-q2）。
+> 新しく作らず、最初からあるプロジェクトをそのまま使っている。
 
 ### 手順2: Google Drive API を有効にする
+> 課題2（ドキュメント API）をやるときは、同じ手順で Google Docs API も有効にする。
+> スコープ（drive.file）は変更不要。課題1の token.json がそのまま使える。
 
 1. 左メニュー「APIとサービス」→「ライブラリ」
 2. 「Google Drive API」を検索して開く
