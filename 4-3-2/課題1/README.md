@@ -10,6 +10,7 @@
 | `drive_upload.py` | 本体 |
 | `README.md` | このファイル（初回セットアップ手順） |
 | `../課題2/docs_create.py` | 課題2（ドキュメント API）の本体。セットアップはこのREADMEを参照 |
+| `../課題3/meet_create.py` | 課題3（Meet API）の本体。セットアップはこのREADMEを参照 |
 
 ---
 
@@ -28,6 +29,11 @@
 ### 手順2: Google Drive API を有効にする
 > 課題2（ドキュメント API）をやるときは、同じ手順で Google Docs API も有効にする。
 > スコープ（drive.file）は変更不要。課題1の token.json がそのまま使える。
+>
+> 課題3（Meet API）をやるときは、同じ手順で **Google Meet API** も有効にする。
+> こちらは**スコープが違う**（`meetings.space.created`）ため、初回だけブラウザでの
+> 許可がもう一度必要になる。認証情報は `token_meet.json` という別ファイルに保存され、
+> 課題1・2の `token.json` には影響しない。
 
 1. 左メニュー「APIとサービス」→「ライブラリ」
 2. 「Google Drive API」を検索して開く

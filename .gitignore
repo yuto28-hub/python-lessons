@@ -1,9 +1,11 @@
 # 認証情報（絶対にコミットしない）
 credentials.json
-token.json
+token*.json
 client_secret*.json
 service_account*.json
 .env
+token.env
+api_key
 
 # Python
 __pycache__/
