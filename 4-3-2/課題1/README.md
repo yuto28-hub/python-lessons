@@ -11,6 +11,8 @@
 | `README.md` | このファイル（初回セットアップ手順） |
 | `../課題2/docs_create.py` | 課題2（ドキュメント API）の本体。セットアップはこのREADMEを参照 |
 | `../課題3/meet_create.py` | 課題3（Meet API）の本体。セットアップはこのREADMEを参照 |
+| `../課題4/zoom_create.py` | 課題4（Zoom API）の本体。認証は Google ではない。手順はファイル先頭のコメント |
+| `../課題5/gmail_send.py` | 課題5（Gmail API）の本体。セットアップはこのREADMEを参照 |
 
 ---
 
@@ -34,6 +36,12 @@
 > こちらは**スコープが違う**（`meetings.space.created`）ため、初回だけブラウザでの
 > 許可がもう一度必要になる。認証情報は `token_meet.json` という別ファイルに保存され、
 > 課題1・2の `token.json` には影響しない。
+>
+> 課題5（Gmail API）をやるときは、同じ手順で **Gmail API** も有効にする。
+> スコープは `gmail.send`（送信だけ）で、トークンは `token_gmail.json` に分かれる。
+> 受信箱の中身は読めない。
+>
+> 課題4（Zoom）は Google Cloud ではない。`zoom_create.py` 先頭のコメントを参照。
 
 1. 左メニュー「APIとサービス」→「ライブラリ」
 2. 「Google Drive API」を検索して開く
@@ -86,7 +94,7 @@ python3 -c "import googleapiclient, google_auth_oauthlib; print('OK')"
 
 ```bash
 cd "/Users/user/Desktop/コンテンツ用/テスト/4-3-2/課題1"
-python3 drive_upload.py ../../課題3/課題3_円グラフ.png
+python3 drive_upload.py ../../4-3-1/課題3/課題3_円グラフ.png
 ```
 
 ブラウザが自動で開くので、Googleアカウントを選んで「許可」を押します。
@@ -104,10 +112,10 @@ python3 drive_upload.py ../../課題3/課題3_円グラフ.png
 
 ```bash
 # ファイルを1つアップロード
-python3 drive_upload.py ../../課題3/課題3_円グラフ.png
+python3 drive_upload.py ../../4-3-1/課題3/課題3_円グラフ.png
 
 # フォルダの中身をまとめてアップロード
-python3 drive_upload.py ../../課題3
+python3 drive_upload.py ../../4-3-1/課題3
 ```
 
 アップロード先は既定で**マイドライブの直下**です。

@@ -3,8 +3,8 @@
 #
 # 使い方:
 #   python3 drive_upload.py <ファイルまたはフォルダのパス>
-#   例1（ファイル1つ）  : python3 drive_upload.py ../../課題3/課題3_円グラフ.png
-#   例2（フォルダ一括）  : python3 drive_upload.py ../../課題3
+#   例1（ファイル1つ）  : python3 drive_upload.py ../../4-3-1/課題3/課題3_円グラフ.png
+#   例2（フォルダ一括）  : python3 drive_upload.py ../../4-3-1/課題3
 #
 # 必要なライブラリ:
 #   pip3 install --user google-api-python-client google-auth-httplib2 google-auth-oauthlib
@@ -211,8 +211,8 @@ def main():
     # sys.argv には実行時の引数が入る。argv[0] はプログラム自身の名前
     if len(sys.argv) < 2:
         print("使い方: python3 drive_upload.py <ファイルまたはフォルダのパス>")
-        print("  例1（ファイル1つ）: python3 drive_upload.py ../../課題3/課題3_円グラフ.png")
-        print("  例2（フォルダ一括）: python3 drive_upload.py ../../課題3")
+        print("  例1（ファイル1つ）: python3 drive_upload.py ../../4-3-1/課題3/課題3_円グラフ.png")
+        print("  例2（フォルダ一括）: python3 drive_upload.py ../../4-3-1/課題3")
         return
 
     print(BAR)
