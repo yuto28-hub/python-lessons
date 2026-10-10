@@ -13,6 +13,8 @@
 | `../課題3/meet_create.py` | 課題3（Meet API）の本体。セットアップはこのREADMEを参照 |
 | `../課題4/zoom_create.py` | 課題4（Zoom API）の本体。認証は Google ではない。手順はファイル先頭のコメント |
 | `../課題5/gmail_send.py` | 課題5（Gmail API）の本体。セットアップはこのREADMEを参照 |
+| `../課題6/youtube_search.py` | 課題6（YouTube Data API）の本体。APIキー方式。手順はファイル先頭のコメント |
+| `../課題7/slack_post.py` | 課題7（Slack API）の本体。認証は Google ではない。手順はファイル先頭のコメント |
 
 ---
 
@@ -42,6 +44,12 @@
 > 受信箱の中身は読めない。
 >
 > 課題4（Zoom）は Google Cloud ではない。`zoom_create.py` 先頭のコメントを参照。
+>
+> 課題6（YouTube）は、同じプロジェクトで **YouTube Data API v3** を有効にし、
+> OAuth ではなく **APIキー** を作る。ブラウザ許可は不要。
+> 鍵は `~/.config/youtube/api_key` に置く。
+>
+> 課題7（Slack）は Google Cloud ではない。`slack_post.py` 先頭のコメントを参照。
 
 1. 左メニュー「APIとサービス」→「ライブラリ」
 2. 「Google Drive API」を検索して開く
