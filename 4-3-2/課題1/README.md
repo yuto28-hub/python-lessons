@@ -15,6 +15,7 @@
 | `../課題5/gmail_send.py` | 課題5（Gmail API）の本体。セットアップはこのREADMEを参照 |
 | `../課題6/youtube_search.py` | 課題6（YouTube Data API）の本体。APIキー方式。手順はファイル先頭のコメント |
 | `../課題7/slack_post.py` | 課題7（Slack API）の本体。認証は Google ではない。手順はファイル先頭のコメント |
+| `../課題8/discord_notify.py` | 課題8（Discord Webhook）の本体。認証は Google ではない。手順はファイル先頭のコメント |
 
 ---
 
@@ -50,6 +51,9 @@
 > 鍵は `~/.config/youtube/api_key` に置く。
 >
 > 課題7（Slack）は Google Cloud ではない。`slack_post.py` 先頭のコメントを参照。
+>
+> 課題8（Discord）は Google Cloud ではない。ボットを常駐させず、チャンネルの
+> Webhook URL に通知を送る。`discord_notify.py` 先頭のコメントを参照。
 
 1. 左メニュー「APIとサービス」→「ライブラリ」
 2. 「Google Drive API」を検索して開く

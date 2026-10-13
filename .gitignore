@@ -5,6 +5,7 @@ client_secret*.json
 service_account*.json
 .env
 token.env
+webhook.env
 api_key
 
 # Python
